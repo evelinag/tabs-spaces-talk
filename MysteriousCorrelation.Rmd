@@ -799,10 +799,8 @@ This is definitely not the whole story and I'm sure there are other variables th
 
 ------------------------------------------------------------------
 
-Link to github with the talk source code
-All data plots in this talk are generated 
+### [github.com/evelinag/tabs-spaces-talk](https://github.com/evelinag/tabs-spaces-talk)
 
-------------------------------------------------------------------
 
 <!-- 
 ===========================================================================================
