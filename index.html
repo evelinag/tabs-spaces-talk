@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="MysteriousCorrelation_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="MysteriousCorrelation_files/reveal.js-3.3.0.1/css/theme/white.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="custom.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section><section id="section" class="titleslide slide level1" data-background="images/coverslide.png"><h1></h1></section><section id="the-mysterious-correlation" class="slide level2" data-background="black">
+<h1>The Mysterious Correlation</h1>
+<h3 id="a-detective-story">A detective story</h3>
+<h3 id="evelina-gabasova">Evelina Gabašová</h3>
+<h4 id="evelgab"><span class="citation" data-cites="evelgab">@evelgab</span></h4>
+</section><section class="slide level2">
+
+<p><img src="images/tabs-spaces-blog.png" /></p>
+</section><section class="slide level2">
+
+<p><img src="MysteriousCorrelation_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" /></p>
+</section><section class="slide level2">
+
+<p><img src="images/tabs-spaces-article1.png" /></p>
+</section><section class="slide level2">
+
+<p><img src="images/tabs-spaces-article2.png" /></p>
+</section><section class="slide level2">
+
+<img src="images/angry-face-meme.jpg" />
+<h1 class="meme">
+Correlation is not causation!
+</h1>
+<!-- Yes, ok. But that's not the whole story, can go further? -->
+</section><section id="correlation-and-causation" class="slide level2">
+<h1>Correlation and causation</h1>
+<!--
+A correlation is the extent to which two variables are related to each other. That is, the extent to which they occur together. Like flowers and Spring – they occur together. They are correlated. But it can not be said that flowers bring the Spring.
+
+A causal relationship is when the change in one variable leads to a change in another. Like the temperature of water and the speed at which ice melts – change the former and the latter will change, as well.
+
+So how does it look in this case?
+- incentives? this clearly doesn't work
+- as an employer, should you put tabs into code style to have cheaper employees?
+- should you use spaces to raise your salary?
+
+' The problem with correlation - symmetric relationship, doesn't mean causation
+' it only says that things appear together
+
+correlation doesn't mean causation but absence of correlation is a strong evidence
+against causal effect
+-->
+</section><section class="slide level2">
+
+<h1>
+Everyone loves a nice correlation!
+</h1>
+<p><img src="images/omg.gif" /></p>
+</section><section class="slide level2">
+
+<p><img src="images/exercise.png" /> <!-- Do you exercise? --></p>
+</section><section class="slide level2">
+
+<p><img src="images/chocolate.png" /></p>
+<!-- Who likes chocolate? -->
+</section><section class="slide level2">
+
+<p><img src="images/brain-tumour-mirror.jpg" /> <!-- Who holds university degree? --></p>
+</section><section class="slide level2">
+
+<p><img src="images/vegetables.png" /> <!-- Do you eat vegetables? --></p>
+</section><section id="section-1" class="slide level2" data-background="images/salad.gif">
+<h1></h1>
+</section><section id="section-2" class="slide level2" data-background="images/causal_language.gif">
+<h1></h1>
+<table class="noborder">
+<tr>
+<td class="noborder" style="width:60%;">
+</td>
+<td class="noborder" style="width:40%;&gt;">
+<h1 class="meme">
+<b>Causal language for correlation data </b>
+</h1>
+</td>
+</tr>
+</table>
+</section><section id="things-to-check" class="slide level2">
+<h1>Things to check</h1>
+<ul>
+<li>correlation or causation (randomised study?)</li>
+<li>small sample size</li>
+<li>result by chance</li>
+<li>hidden cause (latent variable)</li>
+</ul>
+</section><section id="do-storks-deliver-babies" class="slide level2">
+<h1>Do storks deliver babies?</h1>
+<img style="height: 400px" src="images/Stork_with_new-born_child.png" /> <br/>
+<p style="text-align:right">
+<small>Source: Claude Covo-Farchi</small>
+</p>
+<!--
+My favourite example
+is the legend true? How can we deal with it statistically?
+How can we disprove this?
+-->
+</section><section class="slide level2">
+
+<h3 id="testing-the-hypothesis">Testing the hypothesis</h3>
+<p><img src="MysteriousCorrelation_files/figure-revealjs/unnamed-chunk-3-1.png" width="576" /> <small>Matthews, R. (2000), Storks Deliver Babies (p= 0.008). Teaching Statistics, 22: 36–38. </small></p>
+</section><section class="slide level2">
+
+<p><img src="images/storks-babies.png" /></p>
+</section><section class="slide level2">
+
+<p><img src="images/storks-babies-latent.png" /></p>
+</section><section class="slide level2">
+
+<h3 id="storks-and-country-area">Storks and country area</h3>
+<p><img src="MysteriousCorrelation_files/figure-revealjs/unnamed-chunk-4-1.png" width="576" /></p>
+</section><section class="slide level2">
+
+<h3 id="birth-rate-and-country-area">Birth rate and country area</h3>
+<p><img src="MysteriousCorrelation_files/figure-revealjs/unnamed-chunk-5-1.png" width="576" /></p>
+</section><section class="slide level2">
+
+<p><img src="images/storks-babies-area.png" /></p>
+</section><section class="slide level2">
+
+<p><img src="images/tabs-spaces-latent.png" /></p>
+</section><section class="slide level2">
+
+<h3 id="predicting-salary-with-linear-regression">Predicting salary with linear regression</h3>
+<ul>
+<li>Country</li>
+<li>Years of programming experience</li>
+<li>Tabs and spaces usage</li>
+<li>Developer type and language</li>
+<li>Level of formal education (e.g. bachelor’s, master’s, doctorate)</li>
+<li>Whether they contribute to open source</li>
+<li>Whether they program as a hobby</li>
+<li>Company size</li>
+</ul>
+</section><section id="what-happens-if-we-remove-tabs-and-spaces" class="slide level2">
+<h1>What happens if we remove Tabs and Spaces?</h1>
+</section><section id="section-3" class="slide level2" data-background="images/bored-kanye.gif">
+<h1></h1>
+</section><section class="slide level2">
+
+<h3 id="diving-deeper-into-linear-regression">Diving deeper into linear regression</h3>
+<ul>
+<li><strong>Full model</strong> with the information on tabs and spaces included</li>
+<li><strong>Reduced model</strong> without the information on tabs and spaces</li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="coefficient-of-determination">Coefficient of determination</h3>
+<p>how much variance in salary can the model explain</p>
+<table>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Coefficient of determination <span class="math inline">\(R^2\)</span></th>
+<th>Adjusted <span class="math inline">\(R^2_{adj}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Full model</td>
+<td>0.4008</td>
+<td>0.3892</td>
+</tr>
+<tr class="even">
+<td>Reduced model</td>
+<td>0.3938</td>
+<td>0.3892</td>
+</tr>
+</tbody>
+</table>
+<!-- So the information doesn't contribute much -->
+</section><section id="collinearity" class="slide level2">
+<h1>Collinearity?</h1>
+</section><section id="what-changed-in-the-reduced-model" class="slide level2">
+<h1>What changed in the reduced model?</h1>
+</section><section id="more-significant-in-the-reduced-model" class="slide level2">
+<h1>More significant in the reduced model</h1>
+<ul>
+<li>Years of programming experience</li>
+<li>Contributing to open source</li>
+<li>PHP</li>
+</ul>
+</section><section id="open-source" class="slide level2">
+<h1>Open source?</h1>
+</section><section class="slide level2">
+
+<p><img src="MysteriousCorrelation_files/figure-revealjs/open_source_salary-1.png" width="1152" /></p>
+</section><section class="slide level2">
+
+<h3 id="open-source-contributors-use-spaces-more-than-tabs">Open source contributors use spaces more than tabs</h3>
+<!-- People who do contribute to open source, they are more than twice as likely to use spaces rather than tabs. This difference is also statistically significant with p-value 9.1981718\times 10^{-24} -->
+<p><img src="MysteriousCorrelation_files/figure-revealjs/open_source_tabs_us-1.png" width="768" /></p>
+</section><section class="slide level2">
+
+<p><img src="MysteriousCorrelation_files/figure-revealjs/open_source_tabs_world-1.png" width="768" /></p>
+</section><section id="potential-explanation" class="slide level2">
+<h1>Potential explanation?</h1>
+<!--
+I think we're getting closer to potential causal explanations here. The main advantage of using tabs is that you can set how they are displayed in the IDE, with spaces the layout is fixed. This means that the same code can look very different for different people if using tabs. And when people start mixing the two, one person using tabs and other using spaces within the same file, it leads to a mess. My theory is that when diverse people are working on open source projects together without enforced coding style, the possible formatting mess is nudging people towards using spaces simply because the code is consistent for everyone. 
+
+This is just one of possible theories, I didn't look to see if possibly language communities that use predominantly spaces (like Python or Ruby) are more active in open source. Again, correlation doesn't imply causation.
+-->
+</section><section class="slide level2">
+
+<h3 id="language-effects">Language effects?</h3>
+<p><img src="MysteriousCorrelation_files/figure-revealjs/unnamed-chunk-10-1.png" width="576" /></p>
+</section><section class="slide level2">
+
+<h3 id="language-effects-1">Language effects?</h3>
+<p><img src="MysteriousCorrelation_files/figure-revealjs/unnamed-chunk-11-1.png" width="576" /></p>
+</section><section id="language-and-open-source" class="slide level2">
+<h1>Language and open source?</h1>
+</section><section id="tabs-spaces-open-source-salary" class="slide level2">
+<h1>Tabs, spaces, open source &amp; salary</h1>
+<h3 id="how-does-it-fit-together">How does it fit together?</h3>
+<!--
+Now the question is, does open source work account for higher salaries of people who use spaces more than tabs? When we plot the salaries based on open source contributions and indentation method, we get a more complex picture compared to the original that compared only tabs and spaces.
+-->
+<p><img src="MysteriousCorrelation_files/figure-revealjs/open_source_tabs_salary-1.png" width="1152" /></p>
+</section><section class="slide level2">
+
+<!-- Overall, there is some effect but it still doesn't change the global picture: people who use spaces have generally higher salaries than people who use tabs. So is there something else at play as well?
+-->
+<p><img src="MysteriousCorrelation_files/figure-revealjs/unnamed-chunk-12-1.png" width="1440" /></p>
+</section><section class="slide level2">
+
+<h3 id="exploring-salary-distributions">Exploring salary distributions</h3>
+<h4 id="based-on-experience-level">Based on experience level</h4>
+<p><img src="MysteriousCorrelation_files/figure-revealjs/salary_distribution_junior-1.png" width="960" /></p>
+<!--
+How does this group of people differ from the rest? I looked at what makes them different across the questions in the survey and I used the $\chi^2$ test to see if the numbers of people in different categories were significantly different for tab and space users.
+-->
+</section><section class="slide level2">
+
+<h3 id="whats-different-for-these-users">What’s different for these users?</h3>
+<p>… more statistical testing</p>
+</section><section id="section-4" class="slide level2" data-background="images/bored.gif">
+<h1></h1>
+</section><section class="slide level2">
+
+<h3 id="the-importance-of-version-control">The importance of version control</h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">Higher salary</th>
+<th style="text-align: right;">Lower salary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Git</td>
+<td style="text-align: right;">168</td>
+<td style="text-align: right;">660</td>
+</tr>
+<tr class="even">
+<td>I use some other system</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="odd">
+<td>Subversion</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">47</td>
+</tr>
+<tr class="even">
+<td>Team Foundation Server</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">92</td>
+</tr>
+</tbody>
+</table>
+</section><section id="version-control-and-tabsspaces" class="slide level2">
+<h1>Version control and tabs/spaces</h1>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  .
+## X-squared = 258.48, df = 18, p-value &lt; 2.2e-16</code></pre>
+</section><section class="slide level2">
+
+<!--
+Surprisingly, it turns out that the version control system usage is not independent of the indentation method across all developers worldwide, not just the junior US ones (with p-value 1.5336476\times 10^{-44})! This means we have quite a strong link between tabs, spaces and version control systems.
+-->
+<p><img src="images/tabs-spaces-version-control.png" /></p>
+</section><section class="slide level2">
+
+<!--
+Let's have a closer look. Among all US developers, the two most common version control systems (with at least 200 users in the dataset) are Git and Team Foundation Server (TFS). What is their effect on developers' salaries? 
+-->
+<h3 id="version-control-and-salary">Version control and salary</h3>
+<p><img src="MysteriousCorrelation_files/figure-revealjs/version_control_salary-1.png" width="1152" /></p>
+</section><section class="slide level2">
+
+<!--
+People who use Git have higher salaries across all experience levels. Interesting insight, which might be also connected to our previous investigation into open source contributors. But most importantly, how does version control relate to tabs and spaces usage together with salary?
+-->
+<p><img src="MysteriousCorrelation_files/figure-revealjs/versioncontrol_tabs_salary-1.png" width="1152" /></p>
+</section><section class="slide level2">
+
+<p><img src="MysteriousCorrelation_files/figure-revealjs/unnamed-chunk-15-1.png" width="1152" /></p>
+<!--
+Interestingly, version control system breaks the pattern of higher salaries being always associated with space users. 
+Companies using Git have mostly higher salaries regardless of indentation method, at least for developers with up to 10 years of experience! People using tabs with Git have larger salary than people using spaces with TFS, across all experience levels. Within the Git using group, people using spaces still have higher salaries than people using tabs. But within the TFS group, the pattern is not that clear: people using spaces with TFS have the lowest salaries for some of the groups. 
+-->
+</section><section class="slide level2">
+
+<!--
+Internationally, the picture is partly different but it seems that you probably don't want to be a programmer with 15+ years of experience and use spaces with TFS. 
+-->
+<p><img src="MysteriousCorrelation_files/figure-revealjs/versioncontrol_tabs_salary_world-1.png" width="1152" /></p>
+</section><section class="slide level2">
+
+<h3 id="git-and-subversion">Git and Subversion</h3>
+<!--
+For completeness, I looked also at Subversion which was slightly more common than TFS internationally. Subversion doesn't again follow the same pattern of space users having overall larger salaries than tab users. Git + tab users have very similar salaries to Subversion + space users and Git + both tab and space users. 
+-->
+<p><img src="MysteriousCorrelation_files/figure-revealjs/versioncontrol_tabs_salary_world2-1.png" width="1152" /></p>
+</section><section id="why-is-version-control-so-important" class="slide level2">
+<h1>Why is version control so important?</h1>
+<!--
+To sum it up, the combination of open source contributions and version control system usage accounts for at least some of the difference in salaries between tab and spaces users. This doesn't mean that you should start using Git and contribute to open source to get paid more (although it would be great if you did that anyway!). 
+
+I believe these two factors together point more towards different environments and different types of companies, how traditional they are and how they use modern technologies. More traditional *old-school* companies that don't use Git and open source code seem to have lower salaries in general. The type of environment is hard to measure directly in a survey and both of these factors only point in this direction. 
+
+This is definitely not the whole story and I'm sure there are other variables that shed some light into the tabs-spaces salary inequality. My conclusions are also based mainly on US developers where the effect is the clearest. Why I had issues with the salaries in some other countries is what I discsuss below.
+-->
+</section><section class="slide level2">
+
+<p><img src="images/tabs-spaces-company.png" /></p>
+</section><section class="slide level2">
+
+<h3 id="github.comevelinagtabs-spaces-talk"><a href="https://github.com/evelinag/tabs-spaces-talk">github.com/evelinag/tabs-spaces-talk</a></h3>
+<!-- 
+===========================================================================================
+===========================================================================================
+===========================================================================================
+-->
+</section></section>
+<section><section id="but-can-we-trust-the-data" class="titleslide slide level1"><h1>But can we trust the data?</h1></section><section class="slide level2">
+
+<h3 id="salary-distribution">Salary distribution</h3>
+<p><img src="MysteriousCorrelation_files/figure-revealjs/unnamed-chunk-16-1.png" width="1152" /></p>
+</section><section class="slide level2">
+
+<p><img src="MysteriousCorrelation_files/figure-revealjs/low_salaries_countries-1.png" width="960" /></p>
+</section><section class="slide level2">
+
+<!--
+The country with the largest number of not-so-well paid developers is India which makes sense in this context, the average salary in India is significantly lower than in OECD countries. But have a look the countries after India: Poland, Russia and even Germany may not have gigantic salaries but less than 3,000 USD for a full time developer is extremely low. 
+
+I come from the Czech republic so I have some "domain knowledge" of the region - I had a suspicion what's happening in the data. So I checked the salary distribution of a couple of countries in Central and Eastern Europe and how do their distributions compare to countries in other parts of the world.
+-->
+<p><img src="MysteriousCorrelation_files/figure-revealjs/salary_normal_contries-1.png" width="1152" /></p>
+</section><section id="section-5" class="slide level2">
+<h1><img src="MysteriousCorrelation_files/figure-revealjs/salary_soviet_countries-1.png" width="1152" /></h1>
+</section><section id="whats-wrong" class="slide level2">
+<h1>What’s wrong?</h1>
+<!--
+Countries such as the UK and France and even India all have salary distributions with a single peak. On the other hand, all the Central and Eastern European countries have bimodal salary distributions (with two peaks). The first peak corresponds to the very low salary, and the second corresponds to a larger, more believable annual salary. It's less pronounced in Germany, more in Poland and much more in Russia. I checked a couple of other countries including Czech Republic and Ukraine and the trend holds across all of them. All countries from this region seem to have bimodal salary distribution. What's happening there? 
+
+Based on my experience, the Czechs always discuss salary not in terms of the annual salary but in terms of the monthly salary. I have never ever heard any Czech person referring to their annual salary. I checked with a Polish friend and he told me the exact same story - nobody ever talks about annual salary, only about the monthly salary. Considering this, it seems likely that many people simply didn't read the survey question properly and reported their monthly salary instead, simply because that's the number they are used to think about.
+
+Can we fix the data somehow? We can for example fit a mixture model to the data and multiply the low-salary group by 12 to get annual salary. This will create a salary distribution that is left-truncated but represents the actual salaries in the country better than the original distribution. Below is an example for Poland.
+-->
+</section><section class="slide level2">
+
+<p><img src="images/question.png" /></p>
+</section><section class="slide level2">
+
+<p><img src="MysteriousCorrelation_files/figure-revealjs/salary_poland-1.png" width="1152" /></p>
+</section><section class="slide level2">
+
+<p><img src="MysteriousCorrelation_files/figure-revealjs/salary_adapted-1.png" width="1152" /></p>
+</section><section id="missing-data" class="slide level2">
+<h1>Missing data</h1>
+<p><img src="MysteriousCorrelation_files/figure-revealjs/missing_data-1.png" width="960" /></p>
+</section><section class="slide level2">
+
+<h3 id="statistics-of-missing-data">Statistics of missing data</h3>
+<ul>
+<li>missing completely at random</li>
+<li>missing at random</li>
+<li>missing not at random</li>
+</ul>
+</section><section id="data-traps" class="slide level2">
+<h1>Data traps</h1>
+<ul>
+<li>missing data</li>
+<li>wrong data</li>
+</ul>
+<p><br /> <b>accidentally or deliberately </b></p>
+</section><section id="section-6" class="slide level2" data-background="images/confused-cat.gif">
+<h1></h1>
+<!-- 
+=====================================================================
+-->
+</section></section>
+<section><section id="can-you-trust-anything" class="titleslide slide level1"><h1>Can you trust anything?</h1></section><section id="interpretation" class="slide level2">
+<h1>Interpretation</h1>
+<p>Machine learning as a service</p>
+</section><section class="slide level2">
+
+<p><img src="images/sherlock.gif" alt="" width="150px" /></p>
+<h2>
+<div style="color: black; font-size:62pt">
+Evelina Gabasova
+</div>
+</h2>
+<h3>
+Consulting data detective
+</h3>
+<h3>
+<span class="citation" data-cites="evelgab">@evelgab</span>
+</h3>
+<h3>
+evelinag.com
+</h3>
+</section></section>
+    </div>
+  </div>
+
+  <script src="MysteriousCorrelation_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="MysteriousCorrelation_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: true,
+        // Transition style
+        transition: 'none', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        // Optional reveal.js plugins
+        dependencies: [
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>
