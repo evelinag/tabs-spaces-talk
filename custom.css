@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Coda+Caption:800');
+
+.reveal section img
+{
+  border:0px none white;
+  box-shadow:0 0 0px rgba(0, 0, 0, 1) !important;
+}
+
+.reveal h1 {
+	font-family: Montserrat;
+	font-weight: bolder;
+}
+
+.reveal h2 {
+	font-family: Montserrat;
+	font-weight: normal;
+}
+
+.reveal .meme {
+  font-family: 'Coda Caption', sans-serif;
+  font-weight: normal;
+  letter-spacing: -5px;
+}
+
+.reveal h3 {
+	font-family: Montserrat;
+	font-weight: lighter;
+	text-transform: none;
+}
+
+.reveal .withbackground h1, .reveal .withbackground h2, .reveal .withbackground h3 {
+  text-shadow: 7px 7px 20px black, -7px -7px 20px black, 7px -7px 20px black, -7px 7px 20px black;
+  color: white;
+}
+
+.reveal .noborder {
+  border: none;
+  border-collapse: collapse;
+}
