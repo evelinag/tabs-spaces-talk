@@ -16,11 +16,19 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, error=FALSE, dpi = 400,fig.c
 
 ---------------------------------------------------------------------
 
-## The Mysterious Correlation {data-background="black"}
+## The Mysterious Correlation {data-background="white"}
 ### A detective story
 
 ### Evelina Gabašová
 #### @evelgab
+
+<img src="images/sherlock.gif" alt="" width="100px" />
+
+---------------------------------------------------------------------
+
+## {data-background="black"}
+
+<img src="images/pregnant.png" style="height:600px" />
 
 ---------------------------------------------------------------------
 
@@ -378,9 +386,9 @@ differences <- p_values %>% filter(`p-value with`/`p-value without` > 10 & `p-va
 
 ## More significant in the reduced model
 
-* Years of programming experience
-* Contributing to open source
-* PHP
+>- Years of programming experience
+>- Contributing to open source
+>- PHP
 
 ---------------------------------------------------------------------
 
@@ -1010,15 +1018,23 @@ missing_salary %>%
 
 ---------------------------------------------------------------------
 
+![](images/trump.png)
+
+---------------------------------------------------------------------
+
 ## {data-background="images/confused-cat.gif"}
 
 <!-- 
 =====================================================================
 -->
 
-# Can you trust anything?
+# Can you trust data?
 
 <!-- Simple survey, so many problems! -->
+
+---------------------------------------------------------------------
+
+![](images/blackbox.jpg)
 
 ---------------------------------------------------------------------
 
