@@ -12,23 +12,18 @@ output:
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, error=FALSE, dpi = 400,fig.cap = "", cache = T, echo=FALSE)
 ```
 
-# {data-background="images/coverslide.png"}
-
----------------------------------------------------------------------
-
 ## The Mysterious Correlation {data-background="white"}
 ### A detective story
 
 ### Evelina Gabašová
-#### @evelgab
+### @evelgab
 
 <img src="images/sherlock.gif" alt="" width="100px" />
 
 ---------------------------------------------------------------------
 
-## {data-background="black"}
+<img src="images/ati-2.png" style="width:1000px" />
 
-<img src="images/pregnant.png" style="height:600px" />
 
 ---------------------------------------------------------------------
 
@@ -63,10 +58,10 @@ tab_space_survey <- tab_space_survey2
 
 # Plot the original finding
 
-survey_set <- tab_space_survey %>%
+survey_set_to_plot <- tab_space_survey %>%
   filter(!is.na(Salary))
 
-survey_set %>%
+survey_set_to_plot %>%
   group_by(TabsSpaces, YearsCodedGroup) %>%
   summarize(MedianSalary = median(Salary), Observations = n(),
             MeanYears = mean(YearsCodedNumber)) %>%
@@ -80,7 +75,7 @@ survey_set %>%
        x = "Number of years someone coded as part of their job",
        y = "Median annual salary (US Dollars)",
        title = "Salary for developers who use tabs and spaces",
-       subtitle = paste(comma(nrow(survey_set)), "professional developers in the 2017 Stack Overflow Developer Survey"))  +
+       subtitle = paste(comma(nrow(survey_set_to_plot)), "professional developers in the 2017 Stack Overflow Developer Survey"))  +
   theme_minimal(base_size = 20) 
 ```
 
@@ -160,15 +155,63 @@ against causal effect
 
 ## {data-background="images/salad.gif"}
 
+
+---------------------------------------------------------------------
+
+![](images/prison-moratorium.png)
+
+<!--1976 number of incarcerated prisoners ~ crime rate -> let's release people from prisons -->
+
 ---------------------------------------------------------------------
 
 ##  {data-background="images/causal_language.gif"}
 
-<table class="noborder">
-<tr><td class="noborder" style="width:60%;"></td><td class="noborder" style="width:40%;>
-  <h1 class="meme"><b>Causal language for correlation data </b></h1></td></tr>
-</table>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
+<h1><div class="meme">
+Causal language 
+<br/>
+for correlation data 
+</div></h1>
+
+
+---------------------------------------------------------------------
+
+```{r, fig.width=10, fig.height=6}
+
+tab_space_survey2 <- survey_results %>%
+  filter(!is.na(TabsSpaces)) %>%
+  mutate(TabsSpaces = factor(TabsSpaces, c("Spaces", "Tabs", "Both"))) %>%
+  tidyr::extract(YearsCodedJob, "YearsCodedNumber", "(\\d+)", convert = TRUE) %>%
+  replace_na(list(YearsCodedNumber = 0))
+tab_space_survey3 <- 
+  tab_space_survey2 %>%
+  mutate(YearsCodedGroup = case_when(tab_space_survey2$YearsCodedNumber < 5 ~ "<= 5 years",
+                                     tab_space_survey2$YearsCodedNumber <= 10 ~ "6-10",
+                                     tab_space_survey2$YearsCodedNumber <= 15 ~ "11-15",
+                                     TRUE ~ "15+"),
+         YearsCodedGroup = reorder(YearsCodedGroup, YearsCodedNumber, mean)) %>%
+  filter(Professional == "Professional developer")
+
+tab_space_survey3 %>%
+  filter(!is.na(Salary)) %>%
+  group_by(TabsSpaces, YearsCodedGroup) %>%
+  summarize(MedianSalary = median(Salary), Observations = n(),
+            MeanYears = mean(YearsCodedNumber)) %>%
+  ungroup() %>%
+  ggplot(aes(YearsCodedGroup, MedianSalary,
+             group = TabsSpaces, color = TabsSpaces)) +
+  geom_line(size = 2, alpha = 0.8) +
+  scale_y_continuous(labels = dollar_format()) +
+  expand_limits(y = 0) +
+  labs(color = "Uses",
+       x = "Number of years someone coded as part of their job",
+       y = "Median annual salary (US Dollars)",
+       title = "Salary for developers who use tabs and spaces",
+       subtitle = paste(comma(nrow(survey_set)), "professional developers in the 2017 Stack Overflow Developer Survey"))  +
+  theme_minimal(base_size = 20) 
+
+```
 
 ---------------------------------------------------------------------
 
@@ -178,6 +221,41 @@ against causal effect
 - small sample size
 - result by chance
 - hidden cause (latent variable)
+
+---------------------------------------------------------------------
+
+## Sample size?
+
+```{r}
+table(tab_space_survey3$YearsCodedGroup, tab_space_survey3$TabsSpaces) %>% kable
+```
+
+---------------------------------------------------------------------
+
+## Sample size
+
+```{r, fig.width=5, fig.height=3}
+counts <- table(tab_space_survey3$YearsCodedGroup, tab_space_survey3$TabsSpaces) %>% 
+  reshape::melt() %>%
+  rename(Years = Var.1, Indentation = Var.2, Count = value)
+counts$Years <- forcats::fct_relevel(counts$Years, "<= 5 years", "6-10", "11-15", "15+")
+ggplot(counts, aes(Indentation, Years)) +
+  geom_tile(aes(fill = Count), color = "#ffeda0") +
+  scale_fill_gradient(low = "#ffeda0", high = "#f03b20") +
+  xlab("Indentation") +
+  ylab("Years coded") +
+  labs(fill = "Count")+
+  theme_minimal(base_size = 18) 
+
+```
+
+---------------------------------------------------------------------
+
+## Result by chance?
+
+---------------------------------------------------------------------
+
+## Hidden cause?
 
 ---------------------------------------------------------------------
 
@@ -197,7 +275,9 @@ How can we disprove this?
 
 ### Testing the hypothesis
 
-```{r, fig.width=6, fig.height=5}
+---------------------------------------------------------------------
+
+```{r, fig.width=6, fig.height=4}
 storkdata <- read_csv("storks.csv")
 ggplot(storkdata, aes(x=`Storks (pairs)`, y=`Birth rate (10^3/yr)`)) +
   geom_point(size=3) + 
@@ -221,9 +301,7 @@ ggplot(storkdata, aes(x=`Storks (pairs)`, y=`Birth rate (10^3/yr)`)) +
 
 ---------------------------------------------------------------------
 
-### Storks and country area
-
-```{r, fig.width=6, fig.height=5}
+```{r, fig.width=6, fig.height=4}
 ggplot(storkdata, aes(x=`Storks (pairs)`, y=`Area(km2)`)) +
   geom_point(size=3) + 
   geom_smooth(method='lm', se = FALSE, size=2) +
@@ -233,9 +311,7 @@ ggplot(storkdata, aes(x=`Storks (pairs)`, y=`Area(km2)`)) +
 
 ---------------------------------------------------------------------
 
-### Birth rate and country area
-
-```{r, fig.width=6, fig.height=5}
+```{r, fig.width=6, fig.height=4}
 ggplot(storkdata, aes(x=`Birth rate (10^3/yr)`, y=`Area(km2)`)) +
   geom_point(size=3) + 
   geom_smooth(method='lm', se = FALSE, size=2) +
@@ -246,6 +322,28 @@ ggplot(storkdata, aes(x=`Birth rate (10^3/yr)`, y=`Area(km2)`)) +
 ---------------------------------------------------------------------
 
 ![](images/storks-babies-area.png)
+
+
+---------------------------------------------------------------------
+
+## Correlation and causation
+
+- Randomised experiments
+- A/B testing
+
+---------------------------------------------------------------------
+
+## Correlation and causation
+### from observational data
+
+Possible, but we need a lot of assumptions
+
+- know all the variables
+- know the right model
+
+<br/>
+
+### do-calculus
 
 ---------------------------------------------------------------------
 
@@ -473,7 +571,7 @@ This is just one of possible theories, I didn't look to see if possibly language
 
 ### Language effects?
 
-```{r,fig.width=6, fig.height=5}
+```{r,fig.width=6, fig.height=3}
 
 survey_set %>%
   filter(grepl("C#", HaveWorkedLanguage, fixed=T) ) %>%
@@ -489,15 +587,16 @@ survey_set %>%
 
 ### Language effects?
 
-```{r,fig.width=6, fig.height=5}
+```{r,fig.width=6, fig.height=3}
 
+language <- "Ruby"
 survey_set %>%
-  filter(grepl("Python", HaveWorkedLanguage, fixed=T) ) %>%
+  filter(grepl(language, HaveWorkedLanguage, fixed=T) ) %>%
   ggplot(aes(x=TabsSpaces, fill=TabsSpaces)) + geom_bar() + 
-  scale_fill_manual(values=tableau_color_pal(palette = "tableau10")(3)) +
-  theme_minimal(base_size=18) +
-  theme(legend.position="none") +
-  ggtitle("Python")
+    scale_fill_manual(values=tableau_color_pal(palette = "tableau10")(3)) +
+    theme_minimal(base_size=18) +
+    theme(legend.position="none") +
+    ggtitle(language)
 
 ```
 
@@ -809,7 +908,6 @@ This is definitely not the whole story and I'm sure there are other variables th
 
 ### [github.com/evelinag/tabs-spaces-talk](https://github.com/evelinag/tabs-spaces-talk)
 
-
 <!-- 
 ===========================================================================================
 ===========================================================================================
@@ -1007,6 +1105,31 @@ missing_salary %>%
 
 ---------------------------------------------------------------------
 
+### Missing completely at random
+
+![](images/homework.gif)
+
+---------------------------------------------------------------------
+
+### Missing at random
+
+![](images/diet.gif)
+
+<!-- weight watchers example -->
+
+---------------------------------------------------------------------
+
+### Missing not at random
+
+![](images/secret.gif)
+
+---------------------------------------------------------------------
+
+## Missing data on salaries
+
+typically missing at random or missing not at random
+
+---------------------------------------------------------------------
 
 ## Data traps
 
@@ -1019,6 +1142,12 @@ missing_salary %>%
 ---------------------------------------------------------------------
 
 ![](images/trump.png)
+
+---------------------------------------------------------------------
+
+![](images/nyc-1989.png)
+
+<!-- New York mayoral elections in 1989 - David Dinkins (black) vs Rudolph Giuliani (white)
 
 ---------------------------------------------------------------------
 
@@ -1041,9 +1170,26 @@ missing_salary %>%
 ## Interpretation
 Machine learning as a service
 
+
 ---------------------------------------------------------------------
 
-![](images/hn.png)
+## Machine learning
+as learning-by-association
+
+---------------------------------------------------------------------
+
+> "As much as I look into what’s being done with deep learning, I see they’re all stuck there on the level of associations. Curve fitting."
+
+Judea Pearl
+
+
+<!---------------------------------- --->
+
+# Beyond "Correlation is not causation"
+
+---------------------------------------------------------------------
+
+##  {data-background="images/sherlock-tea.gif"}
 
 ---------------------------------------------------------------------
 
