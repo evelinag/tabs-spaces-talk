@@ -19,8 +19,14 @@
 
 .reveal .meme {
   font-family: 'Coda Caption', sans-serif;
-  font-weight: normal;
-  letter-spacing: -5px;
+  letter-spacing: -3px;
+  font-size: 60px;
+  color: white;
+  text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;  
 }
 
 .reveal h3 {
